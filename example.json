@@ -1,0 +1,36 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "vb_password"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "eu-west-2",
+      "source_ami": "ami-f1949e95",
+      "instance_type": "t2.nano",
+      "ssh_username": "ec2-user",
+      "ami_name": "packer-example {{timestamp}}"
+    },
+    {
+      "type": "virtualbox-iso",
+      "iso_checksum": "D2EC6CFA7CF6D89E484AA2D9F830517C",
+      "iso_checksum_type": "md5",
+      "iso_url": "E:\\Data\\Images\\CentOS-7-x86_64-Minimal-1611.iso",
+      "ssh_username": "dave",
+      "ssh_password": "{{user `vb_password`}}",
+      "disk_size": 10000
+    }
+  ],
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "sleep 30",
+      "sudo yum update -y",
+      "sudo yum install -y httpd"
+    ]
+  }]
+}
