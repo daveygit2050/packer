@@ -1,8 +1,7 @@
 {
   "variables": {
     "aws_access_key": "",
-    "aws_secret_key": "",
-    "vb_password"
+    "aws_secret_key": ""
   },
   "builders": [
     {
@@ -17,12 +16,35 @@
     },
     {
       "type": "virtualbox-iso",
-      "iso_checksum": "D2EC6CFA7CF6D89E484AA2D9F830517C",
-      "iso_checksum_type": "md5",
-      "iso_url": "E:\\Data\\Images\\CentOS-7-x86_64-Minimal-1611.iso",
-      "ssh_username": "dave",
-      "ssh_password": "{{user `vb_password`}}",
-      "disk_size": 10000
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 10000,
+      "guest_os_type": "RedHat_64",
+      "http_directory": ".",
+      "iso_checksum": "c455ee948e872ad2194bdddd39045b83634e8613249182b88f549bb2319d97eb",
+      "iso_checksum_type": "sha256",
+      "iso_url": "E:\\Data\\Images\\CentOS-7-x86_64-DVD-1611.iso",
+      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/halt -h -p",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "512"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "2"
+        ]
+      ]
     }
   ],
   "provisioners": [{
