@@ -1,0 +1,61 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": ""
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "ami_description": "Testing installing packages with chocolatey",
+      "ami_name": "choco-test-{{isotime \"2006-01-02T1504Z\"}}",
+      "associate_public_ip_address": true,
+      "access_key": "{{user `aws_access_key`}}",
+      "communicator": "winrm",
+      "disable_stop_instance": true,
+      "instance_type": "t2.nano",
+      "launch_block_device_mappings": [
+        {
+          "delete_on_termination": true,
+          "device_name": "/dev/sda1",
+          "volume_size": 50,
+          "volume_type": "gp2"
+        }
+      ],
+      "region": "eu-west-1",
+      "run_tags": {
+        "Name": "choco-test-{{isotime \"2006-01-02T1504Z\"}}",
+        "Service": "packer-instance"
+      },
+      "secret_key": "{{user `aws_secret_key`}}",
+      "source_ami": "ami-40003a26",
+      "subnet_id": "subnet-5d502c39",
+      "tags": {
+        "Name": "choco-test-{{isotime \"2006-01-02T1504Z\"}}",
+        "Service": "packer-ami"
+      },
+      "user_data_file": "./scripts/user-data/ec2-userdata.ps1",
+      "vpc_id": "vpc-46891722",
+      "winrm_insecure": true,
+      "winrm_use_ssl": true,
+      "winrm_username": "Administrator"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "windows-shell",
+      "script": "scripts\\chocolatey\\install.bat"
+    },
+    {
+      "type": "windows-shell",
+      "inline": [
+        "choco install googlechrome -y",
+        "choco install notepadplusplus --version 7.2 -y",
+        "choco install dotnetcore-runtime --version 1.1.1 -y"
+      ]
+    },
+    {
+      "type": "powershell",
+      "script": "scripts\\sysprep\\sysprep.ps1"
+    }
+  ]
+}
