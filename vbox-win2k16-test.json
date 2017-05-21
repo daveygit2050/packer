@@ -9,8 +9,8 @@
       ],
       "guest_os_type": "Windows2012_64",
       "iso_url": "c:/images/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO",
-      "iso_checksum": "sha256",
-      "iso_checksum_type": "1CE702A578A3CB1AC3D14873980838590F06D5B7101C5DAACCBAC9D73F1FB50F",
+      "iso_checksum": "1CE702A578A3CB1AC3D14873980838590F06D5B7101C5DAACCBAC9D73F1FB50F",
+      "iso_checksum_type": "sha256",
       "communicator": "winrm",
       "winrm_username": "packer",
       "winrm_password": "packer",
@@ -22,7 +22,7 @@
         "floppy_files/vbox-win2k16-test/AutoUnattend.xml",
         "floppy_files/vbox-win2k16-test/boxstarter.ps1",
         "floppy_files/vbox-win2k16-test/package.ps1",
-        "floppy_files/vbox-win2k16-test/postunattend.ps1"
+        "floppy_files/vbox-win2k16-test/postunattend.xml"
       ]
     }
   ]
