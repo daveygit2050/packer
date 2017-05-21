@@ -43,7 +43,7 @@
   "provisioners": [
     {
       "type": "windows-shell",
-      "script": "scripts\\chocolatey\\install.bat"
+      "script": "scripts/chocolatey/install.bat"
     },
     {
       "type": "windows-shell",
@@ -55,7 +55,7 @@
     },
     {
       "type": "powershell",
-      "script": "scripts\\sysprep\\sysprep.ps1"
+      "script": "scripts/sysprep/aws-sysprep.ps1"
     }
   ]
 }
