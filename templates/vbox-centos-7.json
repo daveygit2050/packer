@@ -1,0 +1,38 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks-centos-7.cfg<enter><wait>"
+      ],
+      "disk_size": 20000,
+      "guest_os_type": "RedHat_64",
+      "hard_drive_interface": "sata",
+      "http_directory": "../http",
+      "iso_url": "../images/CentOS-7-x86_64-DVD-1611.iso",
+      "iso_checksum": "c455ee948e872ad2194bdddd39045b83634e8613249182b88f549bb2319d97eb",
+      "iso_checksum_type": "sha256",
+      "shutdown_command": "sudo shutdown now",
+      "ssh_timeout": "60m",
+      "ssh_username": "packer",
+      "ssh_password": "packer",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "512"],
+        ["modifyvm", "{{.Name}}", "--cpus", "2"]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 30",
+        "sudo yum update -y",
+        "sudo yum install -y epel-release",
+        "sudo yum install -y python-pip vim net-tools",
+        "sudo pip install --upgrade pip",
+        "sudo pip install awscli boto3"
+      ]
+    }
+  ]
+}
