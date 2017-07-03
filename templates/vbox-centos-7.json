@@ -14,7 +14,7 @@
       "iso_checksum_type": "sha256",
       "shutdown_command": "sudo shutdown now",
       "ssh_timeout": "60m",
-      "ssh_username": "packer",
+      "ssh_username": "root",
       "ssh_password": "packer",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "512"],
@@ -29,10 +29,14 @@
         "sleep 30",
         "sudo yum update -y",
         "sudo yum install -y epel-release",
-        "sudo yum install -y python-pip vim net-tools",
+        "sudo yum install -y python-pip vim net-tools bzip2",
         "sudo pip install --upgrade pip",
         "sudo pip install awscli boto3"
       ]
+    },
+    {
+      "type": "shell",
+      "script": "../scripts/vbox/centos-guest-additions.sh"
     }
   ]
 }
